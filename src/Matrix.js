@@ -2,20 +2,35 @@ import React, { Component } from 'react';
 
 export default class Matrix extends Component {
   
-  genRow = (vals) => {
-    return vals.map(val => <div className="cell"></div>) // replace me and render a cell component instead!
+  constructor() {
+    super()
+    this.state = {
+      color: 'red'
+    }
   }
-  
-  genMatrix = () => {
-    return this.props.values.map(rowVals => <div className="row">{this.genRow(rowVals)}</div>)
+
+  handleChangeColor = (newColor) => {
+    this.setState({
+      color: newColor
+    })
   }
-  
+
+  componentDidMount() {
+    this.timer = setTimeout(
+      () => this.handleChangeColor('blue'),
+      1000*3
+    )
+  }
+
+  componentWillUnmount() {
+    clearTimeout(this.timer)
+  }
+
   render() {
     return (
-      <div id="matrix">
-        {this.genMatrix()}
+      <div style={ { background: this.state.color} }>
+        Color Div
       </div>
     )
   }
-  
 }
